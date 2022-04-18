@@ -1,4 +1,4 @@
-Value Filldown FPC (\d+)
+Value FPC (\d+)
 Value DESCRIPTION (.*)
 
 Start
