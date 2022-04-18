@@ -1,0 +1,10 @@
+Value Filldown FPC (\d+)
+Value DESCRIPTION (\S+)
+
+Start
+  ^Hardware.*
+  ^Item\s+Version\s+Part\s+number\s+Serial\s+number\s+Description\s*$$
+  ^\s*(Chassis|Midplane|Pseudo|Routing\s+Engine|Mi\S+|CB|AFEB|Routing|PEM|TFEB|CPU|QXM|Power\s+Supply|Fan\s+Tray).*
+  ^.*FPC\s+${FPC}\s+${DESCRIPTION}$$ -> Record 
+
+EOF

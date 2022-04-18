@@ -1,11 +1,11 @@
 from scrapli.driver.core import JunosDriver
-import textfsm
-from ntc_templates import *
+from textfsm import clitable
+
 
 
 dev = {
     "host": "192.168.154.128",
-    "port": 32769,
+    "port": 32770,
     "auth_username": "lab",
     "auth_password": "lab123",
     "transport": "telnet",
@@ -13,10 +13,17 @@ dev = {
 
 def CreateConnection(device):
     with JunosDriver(**device) as conn:
-       # conn.send_command('cli')
-        cards = conn.send_command('show chassis hardware detail')
+        cards = conn.send_command('show chassis hardware')
     return cards.result
+
+def ParseTemplate(data):
+    cli = clitable.CliTable('index', 'templates')
+    attr = {'Command': 'show chassis hardware'}
+    cli.ParseCmd(cmd_input=data, attributes=attr)
+    return cli
 
 
 if __name__ == "__main__":
-    print(CreateConnection(dev))
+    cards = CreateConnection(dev)
+    card_parsed = ParseTemplate(cards)
+    print(card_parsed)
